@@ -1,0 +1,20 @@
+name: localhost-ci-setup
+summary: sets up some ci specific stuff
+maintainers: 
+  - Adam Dyess <adam.dyess@canonical.com>
+  - George Kraft <george.kraft@canonical.com>
+  - Kevin Monroe <kevin.monroe@canonical.com>
+  - Stone Preston <stone.preston@canonical.com>
+  - Mateo Florido <mateo.florido@canonical.com>
+description: |-
+  setup ci related infra
+series:
+  - jammy
+  - focal
+  - bionic
+  - xenial
+subordinate: true
+requires:
+  juju-info:
+    interface: juju-info
+    scope: container

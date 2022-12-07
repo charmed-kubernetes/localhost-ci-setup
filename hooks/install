@@ -1,0 +1,45 @@
+#!/bin/bash
+
+export PATH=/snap/bin:$PATH
+JUJU_SNAP_CHANNEL=$(config-get juju-channel)
+
+apt-get update
+apt-get remove -qyf lxd lxd-client lxcfs lxc-common liblxc1
+apt-get install -qyf libffi-dev python3-dev parallel python3-pip
+snap install juju --classic --channel ${JUJU_SNAP_CHANNEL:-2.9/stable}
+snap install juju-wait --classic
+snap install juju-crashdump --classic --edge
+snap install lxd
+lxd init --auto
+sysctl -w fs.inotify.max_user_instances=1048576
+sysctl -w fs.inotify.max_user_watches=1048576
+lxc network set lxdbr0 ipv6.address none
+lxc network set lxdbr1 ipv6.address none
+usermod -a -G lxd ubuntu
+
+
+export HOME=/home/ubuntu
+pushd $HOME
+rm -rf jenkins || true
+cat <<EOF >> /etc/environment
+export https_proxy=http://squid.internal:3128
+export http_proxy=http://squid.internal:3128
+export HTTPS_PROXY=http://squid.internal:3128
+export HTTP_PROXY=http://squid.internal:3128
+EOF
+
+git config --global http.proxy $JUJU_CHARM_HTTP_PROXY
+git config --global https.proxy $JUJU_CHARM_HTTP_PROXY
+git clone https://github.com/charmed-kubernetes/jenkins
+
+pushd jenkins
+pip3 config set global.proxy $JUJU_CHARM_HTTP_PROXY
+pip3 install tox
+popd
+
+chown ubuntu:ubuntu -R /home/ubuntu/jenkins
+popd
+if [ is-leader ]; then
+    status-set --application "active" "installed"
+fi
+status-set "active" "installed"

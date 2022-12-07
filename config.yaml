@@ -1,0 +1,6 @@
+options:
+  juju-channel:
+    type: string
+    default: 2.9/stable
+  description: |
+    Version of juju client and controller to use in the CI
