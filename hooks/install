@@ -21,12 +21,6 @@ usermod -a -G lxd ubuntu
 export HOME=/home/ubuntu
 pushd $HOME
 rm -rf jenkins || true
-cat <<EOF >> /etc/environment
-export https_proxy=http://squid.internal:3128
-export http_proxy=http://squid.internal:3128
-export HTTPS_PROXY=http://squid.internal:3128
-export HTTP_PROXY=http://squid.internal:3128
-EOF
 
 git config --global http.proxy $JUJU_CHARM_HTTP_PROXY
 git config --global https.proxy $JUJU_CHARM_HTTP_PROXY

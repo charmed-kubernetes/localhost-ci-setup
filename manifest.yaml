@@ -1,0 +1,21 @@
+analysis:
+  attributes:
+    - name: language
+      result: bash
+    - name: framework
+      result: manual
+bases:
+  - architectures:
+    - amd64
+    - arm64
+    - ppc64le
+    - s390x
+    channel: focal
+    name: ubuntu
+  - architectures:
+    - amd64
+    - arm64
+    - ppc64le
+    - s390x
+    channel: jammy
+    name: ubuntu

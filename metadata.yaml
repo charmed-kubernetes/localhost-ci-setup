@@ -1,4 +1,4 @@
-name: localhost-ci-setup
+name: charmed-kubernetes-localhost-ci-setup
 summary: sets up some ci specific stuff
 maintainers: 
   - Adam Dyess <adam.dyess@canonical.com>
@@ -11,8 +11,6 @@ description: |-
 series:
   - jammy
   - focal
-  - bionic
-  - xenial
 subordinate: true
 requires:
   juju-info:
