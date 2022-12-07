@@ -1,4 +1,4 @@
-CHARM = localhost-ci-setup.charm
+CHARM = charmed-kubernetes-localhost-ci-setup.charm
 
 $(CHARM): hooks/* config.yaml metadata.yaml README.md
 	@-echo -- Making Charm --
